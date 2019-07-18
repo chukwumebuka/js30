@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *, *:before, *:after{
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+        }
+       .main_panel{
+           width: 65%;
+           background: rgb(240, 197, 8);
+           margin: auto;
+       }
+       .input, .suggestions{
+           padding: 5px;
+           background: rgb(255, 174, 0);
+           width: 70%;
+           box-sizing: border-box;
+           margin: auto;
+       }
+       .input input{
+        width: 100%;
+        padding: 8px 3px;
+        text-align: center;
+        font-size: 2em;
+       }
+       .suggestions li{
+           background: white;
+           display: flex;
+           justify-content: space-between;
+           padding: 10px 2px;
+           border-bottom: 1px solid rgb(255, 174, 0);
+       }
+       .symbol{
+           background: rgb(255, 174, 0);
+       }
+    </style>
+</head>
+<body>
+    <div class="main_panel">
+        <div class="input">
+            <input type="text" placeholder="state or city">
+        </div>
+        <ul class="suggestions">
+
+        </ul>
+    </div>
+    <script>
+        // const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+        const data = [
+            {city: "boston", population: 2139687, state: "california"},
+            {city:"chicago", population: 6734859, state: "new york"},
+            {city: "bostwana", population: 9839687, state: "new orlean"},
+            {city:"washington", population: 6734859, state: "mustard"},
+            {city: "wales", population: 2189687, state: "chelsea"},
+            {city:"cross river", population: 6674859, state: "calabar"},
+            {city: "Enugu", population: 2139665, state: "achi"},
+            {city:"bayelsa", population: 6734859, state: "opollo"},
+            {city: "oxford", population: 2009687, state: "cambridge"},
+            {city:"new zealand", population: 1144859, state: "alians"},
+            {city: "boston", population: 2139687, state: "california"},
+            {city:"chicago", population: 6734859, state: "new york"},
+            {city: "bostwana", population: 9839687, state: "new orlean"},
+            {city:"washington", population: 6734859, state: "mustard"},
+            {city: "wales", population: 2189687, state: "chelsea"},
+            {city:"cross river", population: 6674859, state: "calabar"},
+            {city: "Enugu", population: 2139665, state: "achi"},
+            {city:"bayelsa", population: 6734859, state: "opollo"},
+            {city: "oxford", population: 2009687, state: "cambridge"},
+            {city:"new zealand", population: 1144859, state: "alians"},
+            {city: "boston", population: 2139687, state: "california"},
+            {city:"chicago", population: 6734859, state: "new york"},
+            {city: "bostwana", population: 9839687, state: "new orlean"},
+            {city:"washington", population: 6734859, state: "mustard"},
+            {city: "wales", population: 2189687, state: "chelsea"},
+            {city:"cross river", population: 6674859, state: "calabar"},
+            {city: "Enugu", population: 2139665, state: "achi"},
+            {city:"bayelsa", population: 6734859, state: "opollo"},
+            {city: "oxford", population: 2009687, state: "cambridge"},
+            {city:"new zealand", population: 1144859, state: "alians"},
+        ];
+
+        // fetch(endpoint)
+        //     .then(bunch => bunch.json())
+        //     .then(blob => data.push(...blob));
+         function matchData(wordToMatch, allData){
+             return allData.filter(result =>{
+                const condition = new RegExp(wordToMatch, 'gi');
+                 return result.city.match(condition) || result.state.match(condition)
+             })
+
+         }
+         function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+         function displayData(){
+             const finalData = matchData(this.value, data);
+             const innerUl = finalData.map(result =>{
+                 const condition =  new RegExp(this.value, "gi");
+                 const state = result.state.replace(condition, `<span class=" symbol" >${this.value}</span>`);
+                 const city = result.city.replace(condition, `<span class=" symbol" >${this.value}</span>`);
+                return `
+                    <li>
+                        <span>${state}, ${city}</span>
+                        <span>${numberWithCommas(result.population)}</span>
+                    </li>
+                `  
+             }).join("");
+             suggestions.innerHTML = innerUl;
+         }
+         const suggestions = document.querySelector(".suggestions");
+         const input = document.querySelector(".input input");
+
+         input.addEventListener("change", displayData);
+         input.addEventListener("keyup", displayData)
+    </script>
+</body>
+</html>

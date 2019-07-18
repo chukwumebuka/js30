@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root{
+            --spacing :10px;
+            --base : #060114;
+            --blur : 10px;
+        }
+        body{
+            text-align: center;
+        }
+    .controls{
+        width: 50%;
+        margin: 50px auto;
+        text-align: center;
+        font-size: 30px;
+    }
+    img{
+        width: 50%;
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+    }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" max="200" min="10" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" max="25" min="0" value="10" data-sizing="px">
+
+        <label for="color">Color:</label>
+        <input type="color" name="base" value="red">
+
+       
+
+    </div>
+     <img src="assets/img/clslide1.jpg" alt="">
+     <script>
+    const inputs = document.querySelectorAll(".controls input");
+    function update(){
+        const datas = this.dataset.sizing || '';
+        document.documentElement.style.setProperty(`--${this.name}`, this.value + datas)   
+    }
+
+     inputs.forEach(input => input.addEventListener('change', update ))
+     </script>
+</body>
+</html>
